@@ -1,5 +1,6 @@
 import 'package:dutch_game_studio_game/objects/ground.dart';
 import 'package:dutch_game_studio_game/objects/platform.dart';
+import 'package:dutch_game_studio_game/actors/slime.dart';
 import 'package:flame/game.dart';
 
 class Block {
@@ -25,6 +26,7 @@ final segment0 = [
   Block(Vector2(6, 3), Platform),
   Block(Vector2(7, 0), Ground),
   Block(Vector2(7, 3), Platform),
+  Block(Vector2(7, 4), Slime),
   Block(Vector2(8, 0), Ground),
   Block(Vector2(9, 0), Ground),
 ];

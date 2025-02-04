@@ -1,13 +1,14 @@
-import 'package:dutch_game_studio_game/Actors/player.dart';
-import 'package:dutch_game_studio_game/Actors/slime.dart';
+import 'package:dutch_game_studio_game/actors/player.dart';
+import 'package:dutch_game_studio_game/actors/slime.dart';
 import 'package:dutch_game_studio_game/objects/ground.dart';
 import 'package:dutch_game_studio_game/objects/platform.dart';
 import 'package:dutch_game_studio_game/managers/segmentManager.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class RunAndJump extends FlameGame {
+class RunAndJump extends FlameGame with HasKeyboardHandlerComponents{
   late Player _player;
   double objectSpeed = 0.0;
 
@@ -36,16 +37,26 @@ class RunAndJump extends FlameGame {
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
         case Ground:
-          add(Ground(
-            gridPosition: block.gridPosition,
-            xOffset: xPositionOffset,
-          ));
+          add(
+            Ground(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
         case Platform:
-          add(Platform(
-            gridPosition: block.gridPosition,
-            xOffset: xPositionOffset,
-          ));
+          add(
+            Platform(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
         case Slime:
+          world.add(
+            Slime(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
       }
     }
   }
