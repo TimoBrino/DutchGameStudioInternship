@@ -1,14 +1,22 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 import '../runAndJump.dart';
+import '../objects/ground.dart';
+import '../objects/platform.dart';
 
 class Player extends SpriteAnimationComponent
-    with KeyboardHandler, HasGameReference<RunAndJump> {
+    with KeyboardHandler, CollisionCallbacks, HasGameReference<RunAndJump> {
   int horizontalDirecton = 0;
+  bool isOnGround = false;
+  bool hasJumped = false;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
+  final Vector2 fromAbove = Vector2(0, -1);
+  final double gravity = 15;
+  final double jumpSpeed = 600;
+  final double terminalVelocity = 150;
 
   Player({
     required super.position,
@@ -16,6 +24,7 @@ class Player extends SpriteAnimationComponent
 
   @override
   void onLoad() {
+    add(CircleHitbox());
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('dudeMonsterRun.png'),
       SpriteAnimationData.sequenced(
@@ -37,18 +46,52 @@ class Player extends SpriteAnimationComponent
             keysPressed.contains(LogicalKeyboardKey.arrowRight))
         ? 1
         : 0;
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
     return true;
   }
 
   @override
   void update(double dt) {
     velocity.x = horizontalDirecton * moveSpeed;
+    
     position += velocity * dt;
     if (horizontalDirecton < 0 && scale.x > 0) {
       flipHorizontally();
     } else if (horizontalDirecton > 0 && scale.x < 0) {
       flipHorizontally();
     }
+    velocity.y += gravity;
+
+    if (hasJumped) {
+      if (isOnGround) {
+        velocity.y = -jumpSpeed;
+        isOnGround = false;
+      }
+      hasJumped = false;
+    }
+    velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
     super.update(dt);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Ground || other is Platform) {
+      if (intersectionPoints.length == 2) {
+        final mid = (intersectionPoints.elementAt(0) +
+            intersectionPoints.elementAt(1) / 2);
+
+        final collisionNormal = absoluteCenter - mid;
+        final seperationDistance = (size.x / 2) - collisionNormal.length;
+        collisionNormal.normalize();
+
+        if (fromAbove.dot(collisionNormal) > 0.9) {
+          isOnGround = true;
+        }
+
+        position += collisionNormal.scaled(seperationDistance);
+      }
+    }
+
+    super.onCollision(intersectionPoints, other);
   }
 }

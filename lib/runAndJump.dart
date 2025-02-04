@@ -8,7 +8,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class RunAndJump extends FlameGame with HasKeyboardHandlerComponents{
+class RunAndJump extends FlameGame
+    with HasCollisionDetection, HasKeyboardHandlerComponents {
   late Player _player;
   double objectSpeed = 0.0;
 
@@ -27,9 +28,7 @@ class RunAndJump extends FlameGame with HasKeyboardHandlerComponents{
     camera.viewfinder.anchor = Anchor.topLeft;
     initializeGame();
 
-    _player = Player(
-      position: Vector2(128, canvasSize.y - 70),
-    );
+   
     world.add(_player);
   }
 
@@ -67,6 +66,9 @@ class RunAndJump extends FlameGame with HasKeyboardHandlerComponents{
     for (var i = 0; i < segmentsToLoad; i++) {
       loadGameSegments(i, (640 * i).toDouble());
     }
+     _player = Player(
+      position: Vector2(128, canvasSize.y - 128),
+    );
   }
 
   @override
