@@ -15,7 +15,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         amount: 6,
         stepTime: 0.12,
-        textureSize: Vector2.all(16),
+        textureSize: Vector2.all(32),
       ),
     );
   }

@@ -35,7 +35,11 @@ class RunAndJump extends FlameGame {
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
-        // case Ground:
+        case Ground:
+          add(Ground(
+            gridPosition: block.gridPosition,
+            xOffset: xPositionOffset,
+          ));
         case Platform:
           add(Platform(
             gridPosition: block.gridPosition,
@@ -56,6 +60,6 @@ class RunAndJump extends FlameGame {
 
   @override
   Color backgroundColor() {
-  return const Color.fromARGB(255, 173, 223, 247);
-}
+    return const Color.fromARGB(255, 173, 223, 247);
+  }
 }
