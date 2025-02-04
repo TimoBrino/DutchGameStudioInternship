@@ -7,7 +7,7 @@ import 'runAndJump.dart';
 void main() {
   runApp(
     const GameWidget<RunAndJump>.controlled(
-    gameFactory: RunAndJump.new, 
+      gameFactory: RunAndJump.new,
     ),
   );
 }
