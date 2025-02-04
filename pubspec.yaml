@@ -1,0 +1,13 @@
+name: dutch_game_studio_game
+description: "A new Flutter project."
+publish_to: none
+
+environment:
+  sdk: ^3.6.1
+  flutter: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flame: ^1.23.0
