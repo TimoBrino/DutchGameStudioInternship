@@ -73,6 +73,14 @@ class Player extends SpriteAnimationComponent
       hasJumped = false;
     }
     velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
+
+    if (position.y > game.size.y + size.y) {
+      game.lives = 0;
+    }
+
+    if (game.lives <= 0) {
+      removeFromParent();
+    }
     super.update(dt);
   }
 
@@ -103,6 +111,7 @@ class Player extends SpriteAnimationComponent
 
   void hit() {
     if (!hitByEnemy) {
+      game.lives--;
       hitByEnemy = true;
     }
     add(

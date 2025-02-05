@@ -28,6 +28,9 @@ final Vector2 gridPosition;
     velocity.x = game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();
+    if (position.x < -size.x || game.lives <= 0) {
+      removeFromParent();
+    }
     super.update(dt);
   }
 }
