@@ -1,3 +1,4 @@
+import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -60,6 +61,10 @@ class RunAndJump extends FlameGame
               xOffset: xPositionOffset,
             ),
           );
+        case Door:
+          add(
+            Door(gridPosition: block.gridPosition, xOffset: xPositionOffset),
+          );
       }
     }
   }
@@ -70,7 +75,6 @@ class RunAndJump extends FlameGame
 
     for (var i = 0; i < segmentsToLoad; i++) {
       loadGameSegments(i, (640 * i).toDouble());
-
     }
     _player = Player(
       position: Vector2(128, canvasSize.y - 128),

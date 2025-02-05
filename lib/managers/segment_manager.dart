@@ -1,3 +1,4 @@
+import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/game.dart';
 
 import 'package:dutch_game_studio_game/objects/ground.dart';
@@ -75,4 +76,5 @@ final segment3 = [
   Block(Vector2(7, 4), Slime),
   Block(Vector2(8, 0), Ground),
   Block(Vector2(9, 0), Ground),
+  Block(Vector2(9, 1), Door),
 ];

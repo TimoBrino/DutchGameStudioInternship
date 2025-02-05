@@ -1,7 +1,9 @@
+import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/services.dart';
+import 'package:universal_html/html.dart' as html;
 
 import 'package:dutch_game_studio_game/actors/slime.dart';
 import '../run_and_jump.dart';
@@ -14,6 +16,7 @@ class Player extends SpriteAnimationComponent
   bool isOnGround = false;
   bool hasJumped = false;
   bool hitByEnemy = false;
+  bool doorOpen = false;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
   final Vector2 fromAbove = Vector2(0, -1);
@@ -50,6 +53,7 @@ class Player extends SpriteAnimationComponent
         ? 1
         : 0;
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
+    doorOpen = keysPressed.contains(LogicalKeyboardKey.keyW);
     return true;
   }
 
@@ -118,6 +122,9 @@ class Player extends SpriteAnimationComponent
     if (other is Slime) {
       hit();
     }
+    if (other is Door) {
+      winGame();
+    }
 
     super.onCollision(intersectionPoints, other);
   }
@@ -138,5 +145,12 @@ class Player extends SpriteAnimationComponent
           hitByEnemy = false;
         },
     );
+  }
+
+  void winGame() {
+    if (!doorOpen) {
+      doorOpen = true;
+      html.window.location.reload();
+    }
   }
 }
