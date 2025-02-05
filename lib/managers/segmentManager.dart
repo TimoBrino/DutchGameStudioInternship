@@ -12,6 +12,7 @@ class Block {
 final segments = [
   segment0,
   segment1,
+  segment2,
 ];
 
 final segment0 = [
@@ -32,5 +33,9 @@ final segment0 = [
 ];
 
 final segment1 = [
+
+];
+
+final segment2 = [
 
 ];
