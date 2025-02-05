@@ -1,14 +1,15 @@
-import 'package:dutch_game_studio_game/actors/player.dart';
-import 'package:dutch_game_studio_game/actors/slime.dart';
-import 'package:dutch_game_studio_game/objects/ground.dart';
-import 'package:dutch_game_studio_game/objects/platform.dart';
-import 'package:dutch_game_studio_game/managers/segmentManager.dart';
-import 'package:dutch_game_studio_game/overlays/hud.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
+
+import 'package:dutch_game_studio_game/actors/player.dart';
+import 'package:dutch_game_studio_game/actors/slime.dart';
+import 'package:dutch_game_studio_game/objects/ground.dart';
+import 'package:dutch_game_studio_game/objects/platform.dart';
+import 'package:dutch_game_studio_game/managers/segment_manager.dart';
+import 'package:dutch_game_studio_game/overlays/hud.dart';
 
 class RunAndJump extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
@@ -32,8 +33,6 @@ class RunAndJump extends FlameGame
 
     camera.viewfinder.anchor = Anchor.topLeft;
     initializeGame();
-
-    world.add(_player);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
@@ -67,13 +66,13 @@ class RunAndJump extends FlameGame
   void initializeGame() {
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
-
     // for (var i = 0; i < segmentsToLoad; i++) {
-    loadGameSegments(0, (640 * 0).toDouble());
+      loadGameSegments(0, (640 * 0).toDouble());
     // }
     _player = Player(
       position: Vector2(128, canvasSize.y - 128),
     );
+    world.add(_player);
     camera.viewport.add(Hud());
   }
 
@@ -89,5 +88,4 @@ class RunAndJump extends FlameGame
     }
     super.update(dt);
   }
-
 }

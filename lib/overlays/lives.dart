@@ -1,5 +1,6 @@
-import 'package:dutch_game_studio_game/runAndJump.dart';
 import 'package:flame/components.dart';
+
+import 'package:dutch_game_studio_game/run_and_jump.dart';
 
 enum LivesState {
   available,

@@ -1,6 +1,7 @@
-import 'package:dutch_game_studio_game/overlays/lives.dart';
-import 'package:dutch_game_studio_game/runAndJump.dart';
 import 'package:flame/components.dart';
+
+import 'package:dutch_game_studio_game/overlays/lives.dart';
+import 'package:dutch_game_studio_game/run_and_jump.dart';
 
 class Hud extends PositionComponent with HasGameReference<RunAndJump> {
   Hud({

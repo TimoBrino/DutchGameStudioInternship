@@ -1,7 +1,8 @@
-import 'package:dutch_game_studio_game/runAndJump.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+
+import 'package:dutch_game_studio_game/run_and_jump.dart';
 
 class Slime extends SpriteAnimationComponent with HasGameReference<RunAndJump> {
   final Vector2 gridPosition;

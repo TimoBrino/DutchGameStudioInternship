@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import '../runAndJump.dart';
+import '../run_and_jump.dart';
 
 class Platform extends SpriteComponent with HasGameReference<RunAndJump> {
   final Vector2 gridPosition;

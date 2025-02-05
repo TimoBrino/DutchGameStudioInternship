@@ -1,10 +1,10 @@
-import 'package:dutch_game_studio_game/actors/slime.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/services.dart';
 
-import '../runAndJump.dart';
+import 'package:dutch_game_studio_game/actors/slime.dart';
+import '../run_and_jump.dart';
 import '../objects/ground.dart';
 import '../objects/platform.dart';
 
