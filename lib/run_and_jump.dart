@@ -29,6 +29,7 @@ class RunAndJump extends FlameGame
       'died.png',
       'platform.png',
       'ground.png',
+      'door.png',
     ]);
 
     camera.viewfinder.anchor = Anchor.topLeft;
@@ -66,9 +67,11 @@ class RunAndJump extends FlameGame
   void initializeGame() {
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
-    // for (var i = 0; i < segmentsToLoad; i++) {
-      loadGameSegments(0, (640 * 0).toDouble());
-    // }
+
+    for (var i = 0; i < segmentsToLoad; i++) {
+      loadGameSegments(i, (640 * i).toDouble());
+
+    }
     _player = Player(
       position: Vector2(128, canvasSize.y - 128),
     );

@@ -10,16 +10,16 @@ import '../objects/platform.dart';
 
 class Player extends SpriteAnimationComponent
     with KeyboardHandler, CollisionCallbacks, HasGameReference<RunAndJump> {
-  int horizontalDirecton = 0;
+  int horizontalDirection = 0;
   bool isOnGround = false;
   bool hasJumped = false;
   bool hitByEnemy = false;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
   final Vector2 fromAbove = Vector2(0, -1);
-  final double gravity = 15;
-  final double jumpSpeed = 800;
-  final double terminalVelocity = 300;
+  final double gravity = 20;
+  final double jumpSpeed = 600;
+  final double terminalVelocity = 150;
 
   Player({
     required super.position,
@@ -40,12 +40,12 @@ class Player extends SpriteAnimationComponent
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    horizontalDirecton = 0;
-    horizontalDirecton += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
+    horizontalDirection = 0;
+    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
             keysPressed.contains(LogicalKeyboardKey.arrowLeft))
         ? -1
         : 0;
-    horizontalDirecton += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
+    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
             keysPressed.contains(LogicalKeyboardKey.arrowRight))
         ? 1
         : 0;
@@ -55,12 +55,12 @@ class Player extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    velocity.x = horizontalDirecton * moveSpeed;
+    velocity.x = horizontalDirection * moveSpeed;
 
     position += velocity * dt;
-    if (horizontalDirecton < 0 && scale.x > 0) {
+    if (horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
-    } else if (horizontalDirecton > 0 && scale.x < 0) {
+    } else if (horizontalDirection > 0 && scale.x < 0) {
       flipHorizontally();
     }
     velocity.y += gravity;
@@ -77,6 +77,19 @@ class Player extends SpriteAnimationComponent
     if (position.y > game.size.y + size.y) {
       game.lives = 0;
     }
+
+    game.objectSpeed = 0;
+// Prevent ember from going backwards at screen edge.
+    if (position.x - 36 <= 0 && horizontalDirection < 0) {
+      velocity.x = 0;
+    }
+// Prevent ember from going beyond half screen.
+    if (position.x + 64 >= game.size.x / 2 && horizontalDirection > 0) {
+      velocity.x = 0;
+      game.objectSpeed = -moveSpeed;
+    }
+
+    position += velocity * dt;
 
     if (game.lives <= 0) {
       removeFromParent();
