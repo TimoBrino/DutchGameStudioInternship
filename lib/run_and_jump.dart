@@ -88,7 +88,7 @@ class RunAndJump extends FlameGame
     );
     world.add(_player);
     camera.viewport.add(Hud());
-    FlameAudio.bgm.play('bgMusic.mp3', volume: 0.1);
+    // FlameAudio.bgm.play('bgMusic.mp3', volume: 0.1);
   }
 
   @override

@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/particles.dart';
 import 'package:flame/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -24,6 +28,9 @@ class Player extends SpriteAnimationComponent
   final double gravity = 20;
   final double jumpSpeed = 600;
   final double terminalVelocity = 150;
+  Random rnd = Random();
+
+Vector2 randomVector2() => (Vector2.random(rnd) - Vector2(5, -1)) * 200;
 
   Player({
     required super.position,
@@ -32,6 +39,7 @@ class Player extends SpriteAnimationComponent
   @override
   void onLoad() {
     add(CircleHitbox());
+
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('dudeMonsterRun.png'),
       SpriteAnimationData.sequenced(
@@ -59,8 +67,10 @@ class Player extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
+    
     velocity.x = horizontalDirection * moveSpeed;
 
+    
     position += velocity * dt;
     if (horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
@@ -98,6 +108,23 @@ class Player extends SpriteAnimationComponent
     if (game.lives <= 0) {
       removeFromParent();
     }
+    // add(
+  // ParticleSystemComponent(
+  //   particle: Particle.generate(
+  //     lifespan: 0.5,
+  //     count: 5,
+  //     generator: (i) => AcceleratedParticle(
+  //       acceleration: randomVector2(),
+  //       speed: randomVector2(),
+  //       child: CircleParticle(
+  //         radius: 1,
+  //         paint: Paint()..color = Colors.white,
+  //       ),
+  //     ),
+  //   ),
+  // ),
+// );
+    
     super.update(dt);
   }
 
