@@ -2,6 +2,7 @@ import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -53,7 +54,6 @@ class Player extends SpriteAnimationComponent
         ? 1
         : 0;
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
-    doorOpen = keysPressed.contains(LogicalKeyboardKey.keyW);
     return true;
   }
 
@@ -148,9 +148,16 @@ class Player extends SpriteAnimationComponent
   }
 
   void winGame() {
-    if (!doorOpen) {
-      doorOpen = true;
-      html.window.location.reload();
-    }
+    decorator.addLast(PaintDecorator.blur(
+      1.0,
+    ));
+    add(
+      OpacityEffect.by(
+        0.9,
+        EffectController(duration: 0.5),
+      )..onComplete = () {
+          html.window.location.reload();
+        },
+    );
   }
 }

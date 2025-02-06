@@ -2,6 +2,7 @@ import 'package:dutch_game_studio_game/objects/door.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -32,6 +33,12 @@ class RunAndJump extends FlameGame
       'ground.png',
       'door.png',
     ]);
+
+    await FlameAudio.audioCache.loadAll([
+      'bgMusic.mp3',
+    ]);
+
+    FlameAudio.bgm.initialize();
 
     camera.viewfinder.anchor = Anchor.topLeft;
     initializeGame();
@@ -81,6 +88,7 @@ class RunAndJump extends FlameGame
     );
     world.add(_player);
     camera.viewport.add(Hud());
+    FlameAudio.bgm.play('bgMusic.mp3', volume: 0.1);
   }
 
   @override
